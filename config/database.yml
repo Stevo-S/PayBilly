@@ -31,6 +31,6 @@ production:
   adapter: postgresql
   encoding: unicode
   host: localhost
-  database: paybilly_dev
-  username: paybilly_dev
+  database: paybilly
+  username: paybilly
   pool: 16
