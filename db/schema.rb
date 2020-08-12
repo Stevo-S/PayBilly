@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_12_153306) do
+ActiveRecord::Schema.define(version: 2020_08_12_153820) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,6 +62,28 @@ ActiveRecord::Schema.define(version: 2020_08_12_153306) do
     t.index ["trans_id"], name: "index_c2b_transactions_on_trans_id"
   end
 
+  create_table "paybill_accounts", force: :cascade do |t|
+    t.string "name"
+    t.bigint "paybill_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["paybill_id"], name: "index_paybill_accounts_on_paybill_id"
+  end
+
+  create_table "paybills", force: :cascade do |t|
+    t.string "paybill_number"
+    t.string "consumer_key"
+    t.string "consumer_secret"
+    t.string "validation_url"
+    t.string "confirmation_url"
+    t.datetime "last_registration_date"
+    t.boolean "last_registration_succeeded"
+    t.integer "last_registration_response_code", limit: 2
+    t.text "last_registration_response"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -74,4 +96,5 @@ ActiveRecord::Schema.define(version: 2020_08_12_153306) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "paybill_accounts", "paybills"
 end
