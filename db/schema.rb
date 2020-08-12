@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_12_152802) do
+ActiveRecord::Schema.define(version: 2020_08_12_153306) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,27 @@ ActiveRecord::Schema.define(version: 2020_08_12_152802) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_admin_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
+  end
+
+  create_table "c2b_transactions", force: :cascade do |t|
+    t.string "transaction_type"
+    t.string "trans_id"
+    t.string "trans_time"
+    t.string "trans_amount"
+    t.string "business_short_code"
+    t.string "bill_ref_number", limit: 20
+    t.string "invoice_number"
+    t.string "org_account_balance"
+    t.string "third_party_trans_id"
+    t.string "msisdn", limit: 12
+    t.string "first_name"
+    t.string "middle_name"
+    t.string "last_name"
+    t.boolean "accepted"
+    t.boolean "confirmed"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["trans_id"], name: "index_c2b_transactions_on_trans_id"
   end
 
   create_table "users", force: :cascade do |t|
