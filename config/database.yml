@@ -15,6 +15,7 @@ development:
   host: localhost
   database: paybilly_dev
   username: paybilly_dev
+  password: paybilly_dev
   
 
 # Warning: The database defined as "test" will be erased and
