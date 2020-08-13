@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_12_154828) do
+ActiveRecord::Schema.define(version: 2020_08_13_090525) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,6 +79,20 @@ ActiveRecord::Schema.define(version: 2020_08_12_154828) do
 
   create_table "paybills", force: :cascade do |t|
     t.string "paybill_number"
+    t.string "consumer_key"
+    t.string "consumer_secret"
+    t.string "validation_url"
+    t.string "confirmation_url"
+    t.datetime "last_registration_date"
+    t.boolean "last_registration_succeeded"
+    t.integer "last_registration_response_code", limit: 2
+    t.text "last_registration_response"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "tills", force: :cascade do |t|
+    t.string "till_number"
     t.string "consumer_key"
     t.string "consumer_secret"
     t.string "validation_url"
