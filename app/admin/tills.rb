@@ -1,25 +1,25 @@
-ActiveAdmin.register Paybill do
+ActiveAdmin.register Till do
 
   # See permitted parameters documentation:
   # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
   #
   # Uncomment all parameters which should be permitted for assignment
   #
-  # permit_params :paybill_number, :basic_auth_credentials, :validation_url, :confirmation_url, :last_registration_date, :last_registration_succeeded, :last_registration_response_code, :last_registration_response
+  # permit_params :till_number, :consumer_key, :consumer_secret, :validation_url, :confirmation_url, :last_registration_date, :last_registration_succeeded, :last_registration_response_code, :last_registration_response
   #
   # or
   #
   # permit_params do
-  #   permitted = [:paybill_number, :basic_auth_credentials, :validation_url, :confirmation_url, :last_registration_date, :last_registration_succeeded, :last_registration_response_code, :last_registration_response]
+  #   permitted = [:till_number, :consumer_key, :consumer_secret, :validation_url, :confirmation_url, :last_registration_date, :last_registration_succeeded, :last_registration_response_code, :last_registration_response]
   #   permitted << :other if params[:action] == 'create' && current_user.admin?
   #   permitted
   # end
   
-  permit_params :paybill_number, :validation_url, :confirmation_url, :consumer_key, :consumer_secret
+  permit_params :till_number, :validation_url, :confirmation_url, :consumer_key, :consumer_secret
 
   form do |f|
     f.inputs do
-      f.input :paybill_number
+      f.input :till_number
       f.input :consumer_key
       f.input :consumer_secret
       f.input :validation_url
@@ -59,7 +59,7 @@ ActiveAdmin.register Paybill do
     registration_request['Authorization'] = "Bearer #{access_token}"
     
     registration_request.body = {
-      short_code: resource.paybill_number,
+      short_code: resource.till_number,
       response_type: 'Cancelled',
       confirmation_u_r_l: resource.confirmation_url,
       validation_u_r_l: resource.validation_url
@@ -78,7 +78,6 @@ ActiveAdmin.register Paybill do
   end
   
   action_item :register_urls, only: :show do
-    link_to 'Register the URLs', register_urls_admin_paybill_path(paybill)
+    link_to 'Register the URLs', register_urls_admin_till_path(till)
   end
-
 end

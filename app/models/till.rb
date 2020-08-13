@@ -1,0 +1,2 @@
+class Till < ApplicationRecord
+end
