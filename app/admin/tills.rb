@@ -59,12 +59,12 @@ ActiveAdmin.register Till do
     registration_request['Authorization'] = "Bearer #{access_token}"
     
     registration_request.body = {
-      short_code: resource.till_number,
-      response_type: 'Cancelled',
-      confirmation_u_r_l: resource.confirmation_url,
-      validation_u_r_l: resource.validation_url
+      "ShortCode": resource.till_number,
+      "ResponseType": 'Cancelled',
+      "ConfirmationURL": resource.confirmation_url,
+      "ValidationURL": resource.validation_url
     }.to_json
-
+    
     http = Net::HTTP.new(url.host, url.port)
 	  http.use_ssl = true if url.scheme == "https"
 
