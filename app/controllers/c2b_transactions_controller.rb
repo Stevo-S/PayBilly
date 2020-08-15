@@ -1,6 +1,8 @@
 class C2bTransactionsController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:validate, :create]
   
+  before_action :authenticate_user!, only: [:show, :index]
+  
   def validate
     tx = C2bTransaction.new(transaction_params)
     tx.accepted = true
@@ -34,9 +36,22 @@ class C2bTransactionsController < ApplicationController
   end
 
   def index
+    page = params[:page]
+    per_page = params[:per_page]
+    @q = C2bTransaction.ransack(params[:q])
+    @q.created_at_gteq = Date.today.midnight unless params[:q]
+    @q.sorts = 'updated_at desc'
+    @transactions = @q.result(distinct: true).accessible_by(current_ability).page params[:page]
+
+    if params[:q].nil? then
+        params[:q] = { created_at_gteq: Date.today.midnight.strftime('%FT%T'),
+        created_at_lteq: Date.tomorrow.strftime('%FT%T'), active_eq: true }
+    end
   end
 
   def show
+    @c2b_transaction = C2bTransaction.find(params[:id])
+    authorize! :read, @c2b_transaction
   end
   
   private

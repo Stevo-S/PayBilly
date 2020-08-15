@@ -15,4 +15,5 @@ ActiveAdmin.register C2bTransaction do
   #   permitted
   # end
   
+  actions :index, :show
 end

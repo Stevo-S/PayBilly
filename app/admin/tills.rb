@@ -72,6 +72,7 @@ ActiveAdmin.register Till do
     resource.last_registration_response_code = response.code.to_i
     resource.last_registration_succeeded = resource.last_registration_response_code == 200
     resource.last_registration_response = response.body
+    resource.last_registration_date = Time.now
 
     resource.save
     redirect_to resource_path

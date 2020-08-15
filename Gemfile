@@ -67,3 +67,13 @@ gem 'devise'
 
 # Use Active Admin for the admin panel
 gem 'activeadmin'
+
+# Use Bootstrap
+gem 'bootstrap'
+gem 'jquery-rails'
+
+# Use kaminari for paging
+gem 'kaminari'
+
+# Use CanCanCan for authorisation
+gem 'cancancan'
