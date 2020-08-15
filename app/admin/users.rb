@@ -14,8 +14,8 @@ ActiveAdmin.register User do
   #   permitted << :other if params[:action] == 'create' && current_user.admin?
   #   permitted
   # end
-  permit_params :name, :email, :password, :password_confirmation, 
-    paybill_account_ids: [], till_ids: [] 
+  permit_params :name, :email, :password, :password_confirmation, :sampling_threshold,
+    :sampling_rate, :hard_sampling, paybill_account_ids: [], till_ids: [] 
 
   form do |f|
     f.inputs "User Details" do
@@ -26,11 +26,11 @@ ActiveAdmin.register User do
         f.inputs :password_confirmation
       end
     
+      f.input :sampling_rate
+      f.input :hard_sampling
+      f.input :sampling_threshold
+
       f.input :tills, as: :check_boxes, collection: Till.pluck(:till_number, :id)
-      # f.input :paybill_accounts, as: :check_boxes, collection: PaybillAccount.all,
-      #   member_label: (Proc.new do |account|
-      #     "#{account.paybill.paybill_number}: #{account.name}"
-      #   end)
 
       f.inputs "Paybill Accounts" do
         Paybill.all.each do |paybill|
@@ -58,15 +58,18 @@ ActiveAdmin.register User do
       row :failed_attempts
       row :unlock_token
       row :locked_at
+      row :sampling_rate
+      row :hard_sampling
+      row :sampling_threshold
 
       row "Tills" do |u|
         (u.tills.map{ |t| t.till_number }).join(', ')
       end
 
+      # TODO: Find a better way to visually present this information
       row "Paybill" do 
         "ACCOUNTS" 
       end
-
       user.paybill_accounts.collect { |p| p.paybill }.uniq.each do |p|
         row "Paybill: #{p.paybill_number}" do
           user.paybill_accounts.where(paybill_id: p.id).
