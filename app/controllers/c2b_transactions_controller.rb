@@ -47,6 +47,17 @@ class C2bTransactionsController < ApplicationController
         params[:q] = { created_at_gteq: Date.today.midnight.strftime('%FT%T'),
         created_at_lteq: Date.tomorrow.strftime('%FT%T'), active_eq: true }
     end
+
+    @total_count = @transactions.total_count
+
+    if @total_count > current_user.sampling_threshold then
+      @total_count = (@transactions.total_count/current_user.sampling_rate).to_i unless
+        current_user.sampling_rate <= 0 || current_user.sampling_rate > 99.9
+    
+      if current_user.hard_sampling then
+        @transactions = @transactions.limit(@transactions.total_count)
+      end
+    end
   end
 
   def show
