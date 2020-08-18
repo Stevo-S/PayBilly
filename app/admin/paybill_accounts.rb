@@ -41,10 +41,19 @@ ActiveAdmin.register PaybillAccount do
     selectable_column
     id_column
     column :name
+
     column :paybill do |account|
       account.paybill.paybill_number
     end
+
     column :created_at
     column :updated_at
+
+    actions
   end
+
+  filter :paybill_id, as: :select, 
+    collection: Paybill.all.collect { |p| [p.paybill_number, p.id] }
+  filter :created_at
+  filter :updated_at
 end
