@@ -51,7 +51,7 @@ class C2bTransactionsController < ApplicationController
     @total_count = @transactions.total_count
 
     if @total_count > current_user.sampling_threshold then
-      @total_count = (@transactions.total_count/current_user.sampling_rate).to_i unless
+      @total_count = (@transactions.total_count * (current_user.sampling_rate / 100)).to_i unless
         current_user.sampling_rate <= 0 || current_user.sampling_rate > 99.9
     
       if current_user.hard_sampling then
