@@ -33,11 +33,10 @@ class Ability
 
     user ||= User.new
     
-    accounts = user.paybill_accounts.pluck(:name)
+    accounts = user.paybill_accounts.pluck(:name).map(&:downcase)
     can :read, C2bTransaction, 
       ["lower(bill_ref_number) in (?)", accounts]  do |transaction|
-      user.paybill_accounts.pluck(:name).map(&:downcase).
-        include? transaction.bill_ref_number.downcase
+        accounts.include? transaction.bill_ref_number.downcase
     end
 
     can :read, C2bTransaction, business_short_code: user.tills.pluck(:till_number)
