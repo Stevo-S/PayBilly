@@ -40,7 +40,7 @@ ActiveAdmin.register C2bTransaction do
 
     div class: "panel" do
       h2 "Total amount: Kshs. "\
-      "#{number_with_precision(collection.pluck(:trans_amount).map(&:to_d).reduce(:+), 
+      "#{number_with_precision(c2b_transactions.pluck(:trans_amount).map(&:to_d).reduce(:+), 
                                 :precision => 2, 
                                 :delimiter => ',')}"
     end
