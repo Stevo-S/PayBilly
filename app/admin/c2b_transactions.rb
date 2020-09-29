@@ -15,5 +15,34 @@ ActiveAdmin.register C2bTransaction do
   #   permitted
   # end
   
-  actions :index, :show
+  index do
+    id_column
+    column :transaction_type
+    column :trans_id
+    column :trans_time
+    column :trans_amount
+    column :business_short_code
+    column :bill_ref_number
+    column :invoice_number
+    column :org_account_balance
+    column :third_party_trans_id
+    column :msisdn
+    column :first_name
+    column :middle_name
+    column :last_name
+    column :accepted
+    column :confirmed
+    column :created_at
+
+    # actions defaults: false do |tx|
+    #   item "View", admin_c2b_transaction_path(tx)
+    # end
+
+    div class: "panel" do
+      h2 "Total amount: Kshs. "\
+      "#{number_with_precision(collection.pluck(:trans_amount).map(&:to_d).reduce(:+), 
+                                :precision => 2, 
+                                :delimiter => ',')}"
+    end
+  end
 end
