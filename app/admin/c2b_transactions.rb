@@ -14,6 +14,9 @@ ActiveAdmin.register C2bTransaction do
   #   permitted << :other if params[:action] == 'create' && current_user.admin?
   #   permitted
   # end
+
+  # TEMPORARY: REMOVE BEFORE PUSHING TO PRODUCTION!!!!!
+  config.per_page = 5
   
   index do
     id_column
@@ -40,9 +43,12 @@ ActiveAdmin.register C2bTransaction do
 
     div class: "panel" do
       h2 "Total amount: Kshs. "\
-      "#{number_with_precision(c2b_transactions.pluck(:trans_amount).map(&:to_d).reduce(:+), 
+      "#{number_with_precision(C2bTransaction.search(params[:q]).result.
+                                  pluck(:trans_amount).map(&:to_d).reduce(:+), 
                                 :precision => 2, 
-                                :delimiter => ',')}"
+                                :delimiter => ','
+        )
+      }"
     end
   end
 end
