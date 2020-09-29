@@ -14,9 +14,6 @@ ActiveAdmin.register C2bTransaction do
   #   permitted << :other if params[:action] == 'create' && current_user.admin?
   #   permitted
   # end
-
-  # TEMPORARY: REMOVE BEFORE PUSHING TO PRODUCTION!!!!!
-  config.per_page = 5
   
   index do
     id_column
