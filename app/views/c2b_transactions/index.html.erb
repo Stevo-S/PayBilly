@@ -26,6 +26,7 @@
   <thead class="thead-inverse">
     <tr>
       <th>Phone Number</th>
+      <th>Name</th>
       <th>Paybill/Till</th>
       <th>Account</th>
       <th>Amount</th>
@@ -37,6 +38,7 @@
     <% @transactions.each do |transaction| %>
       <tr>
         <td><%= transaction.msisdn %></td>
+        <td><%= "#{transaction.first_name} #{transaction.middle_name} #{transaction.last_name}".squish%></td>
         <td><%= transaction.business_short_code %></td>
         <td><%= transaction.bill_ref_number %></td>
         <td><%= transaction.trans_amount %></td>
