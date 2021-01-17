@@ -58,6 +58,8 @@ class C2bTransactionsController < ApplicationController
         @transactions = @transactions.limit(@transactions.total_count)
       end
     end
+
+    @transactions_sum = @transactions.sum { |t| t.trans_amount.to_f }
   end
 
   def show
