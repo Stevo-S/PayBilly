@@ -19,7 +19,8 @@
       <%= f.submit class: 'btn btn-primary btn-sm' %>
     <% end %>
 
-    <h3>Total: <%= @total_count %></h3>
+    <h3>Transactions: <%= @total_count %></h3>
+    <h3>Total Amount: Kshs. <%= number_with_precision(@transactions_sum, :precision => 2, :delimiter => ',') %></h3>
 </div>
 
 <table class="table table-striped table-hover">
